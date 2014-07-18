@@ -1,4 +1,5 @@
 run: *.go
+	go get .
 	go run *.go
 
 bindata: static/*

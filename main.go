@@ -325,7 +325,7 @@ func main() {
     //c.Writer.Header().Set("ETag",fmt.Sprintf("%d",rand.Int63()))
     c.Writer.Header().Set("ETag",fmt.Sprintf("\"%d\"",12345))
     c.Writer.Header().Set("Cache-Control","max-age=0, must-revalidate")
-    c.String(200,fmt.Sprintf("Bla bla bla %#v [%s]",c.Req.Header, c.Req.Header.Get("If-none-match")))
+    c.String(200,fmt.Sprintf("Bla bla bla %#v [%s]",c.Request.Header, c.Request.Header.Get("If-none-match")))
   })
 
   r.GET("/static/*path", func(c *gin.Context){
@@ -435,7 +435,7 @@ func main() {
   })
 
   r.POST("/upload", func(c *gin.Context){
-    params, err := url.ParseQuery(c.Req.URL.RawQuery)
+    params, err := url.ParseQuery(c.Request.URL.RawQuery)
     fmt.Printf("%#v\n", params)
     if _, ok := params["dir"]; ok {
       target_dir = params["dir"][0]
@@ -444,7 +444,7 @@ func main() {
     }
 
     check(err)
-    r:=c.Req
+    r:=c.Request
     w:=c.Writer
     w.Header().Add("Access-Control-Allow-Origin", "*")
     w.Header().Add(
